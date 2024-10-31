@@ -4,12 +4,20 @@ const usersTable = [
   { id: 2, username: "test@user.com", password: "badpassword" },
   { id: 3, username: "email@domain.com", password: "badpassword" },
 ];
+
+
 let renderSuccess = () => {
   document.getElementById("success-message").hidden = false;
+  document.getElementById("error-message").hidden = true;
+
 };
+
 let renderError = () => {
   document.getElementById("error-message").hidden = false;
+  document.getElementById("success-message").hidden = true;
+
 };
+
 let resetMessage = () => {
   document.getElementById("success-message").hidden = true;
   document.getElementById("error-message").hidden = true;
@@ -24,10 +32,21 @@ addEventListener("submit", (event) => {
 
   console.log(`email submitted: ${email}`);
   console.log(`password submitted: ${password}`);
-  /*
-    TODO:
-    1. Check if the email and password are valid (using the usersTable)
-    2. If they are, call renderSuccess()
-    3. If they are not, call renderError()
-   */
+
+
+  for (let i = 0; i < usersTable.length; i++) {
+    //console.log("usersTable[i].username, ", usersTable[i].username);
+
+    if (usersTable[i].username === email && usersTable[i].password === password) {
+      renderSuccess();
+      break;
+
+    } else if (usersTable[i].username !== email || usersTable[i].password !== password) {
+      renderError();
+
+    } else {
+      console.log("Some other issue has arisen.");
+    }
+  }
+
 });
